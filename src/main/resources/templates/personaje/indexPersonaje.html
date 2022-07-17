@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Disney World</title>
+    <!-- Bootstrap core CSS -->
+    <link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link th:href="@{/bootstrap/css/jumbotron.css}" rel="stylesheet">
+    <link th:href="@{/bootstrap/css/sticky-footer-navbar.css}" rel="stylesheet">
+</head>
+
+<body>
+
+<header th:insert="fragments/navbar :: navbar"></header>
+<main>
+
+    <h1 class="text-center mt-3">Personajes</h1>
+    <div class="d-flex justify-content-center align-items-center">
+        <h4>Buscar:</h4>
+        <form class="form-inline ml-3 mt-3" th:action="@{/search}" method="get">
+            <input type="text" class="form-control mb-3" placeholder="Escriba una búsqueda">&nbsp;
+            <button type="submit" class="btn btn-primary mb-3">Buscar</button>
+        </form>
+        <a th:href="@{/personaje/crear}"><button class="btn btn-success ml-3">Crear</button></a>
+    </div>
+
+    <div class="container">
+        <div class="card" style="width: 18rem;">
+            <img class="card-img-top" th:src="@{/images/img.png}" alt="img">
+            <div class="card-body">
+                <h5 class="card-title">Green Arrow</h5>
+                <a th:href="@{/personaje/editar}" class="btn btn-primary">Editar</a>
+                <a th:href="@{/personaje/eliminar}" class="btn btn-danger">Eliminar</a>
+                <a th:href="@{/personaje/detalle}" class="btn btn-warning">Detalle</a>
+            </div>
+        </div>
+    </div>
+
+
+
+</main>
+<footer th:insert="fragments/footer :: footer" class="footer"></footer>
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+</body>
+</html>
