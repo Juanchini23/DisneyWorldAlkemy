@@ -11,6 +11,7 @@ public class Personaje {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
     private String imagen;
+    private String nombre;
     private Integer edad;
     private Integer peso;
     private String historia;
@@ -20,6 +21,14 @@ public class Personaje {
             joinColumns = @JoinColumn(name = "idPersonaje"), // aca ambas claves foraneas
             inverseJoinColumns = @JoinColumn(name = "idFilm"))
     private List<Film> peliculas;
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
 
     public Long getId() {
         return id;

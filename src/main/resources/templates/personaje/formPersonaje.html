@@ -22,33 +22,22 @@
     <h1 class="text-center mt-3">Crea un nuevo personaje</h1>
 
     <div class="container w-50 mx-auto text-center mt-3">
-        <form>
+        <form method="post" th:action="@{/personaje/crear}" th:object="${personaje}" enctype="multipart/form-data">
             <div class="form-group my-5">
                 <label for="nombre">Nombre</label>
-                <input type="text" class="form-control" id="nombre"  placeholder="Ingresa el nombre">
+                <input type="text" class="form-control" th:field="*{nombre}" id="nombre" name="nombre"  placeholder="Ingresa el nombre">
             </div>
             <div class="form-group my-5">
                 <label for="edad">Edad</label>
-                <input type="number" class="form-control" id="edad" placeholder="Ingrese la edad">
+                <input type="number" class="form-control" th:field="*{edad}" id="edad" name="edad" placeholder="Ingrese la edad">
             </div>
             <div class="form-group my-5">
                 <label for="peso">Peso</label>
-                <input type="number" class="form-control-file" id="peso">
+                <input type="number" class="form-control-file" th:field="*{peso}" id="peso" name="peso">
             </div>
             <div class="form-group my-5">
                 <label for="historia">Historia</label>
-                <textarea class="form-control" id="historia" rows="3"></textarea>
-            </div>
-            <!-- editar para que elija varias peliculas -->
-            <div class="form-group my-5">
-                <label for="peliculas">Peliculas</label>
-                <select class="form-control" id="peliculas">
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                </select>
+                <textarea class="form-control" th:field="*{historia}" id="historia" name="historia" rows="3"></textarea>
             </div>
             <div class="form-group my-5">
                 <label for="imagen">Imagen</label>
