@@ -16,11 +16,11 @@ public class Personaje {
     private Integer peso;
     private String historia;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    /*@ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "participacion", // nombre de la entidad que se genera, importa el orden de los join
             joinColumns = @JoinColumn(name = "idPersonaje"), // aca ambas claves foraneas
             inverseJoinColumns = @JoinColumn(name = "idFilm"))
-    private List<Film> peliculas;
+    private List<Film> peliculas;*/
 
     public String getNombre() {
         return nombre;
@@ -70,11 +70,11 @@ public class Personaje {
         this.historia = historia;
     }
 
-    public List<Film> getPeliculas() {
+    /*public List<Film> getPeliculas() {
         return peliculas;
     }
 
     public void setPeliculas(List<Film> peliculas) {
         this.peliculas = peliculas;
-    }
+    }*/
 }

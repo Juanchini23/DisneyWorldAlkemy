@@ -1,23 +1,36 @@
 package disneyworld.DisneyWorld.controller;
 
 import disneyworld.DisneyWorld.model.Personaje;
+import disneyworld.DisneyWorld.service.IPersonajeService;
+import disneyworld.DisneyWorld.util.Utileria;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/personaje")
 public class PersonajeController {
 
-    @GetMapping("/")
-    public String homePersonaje(){
+    @Value("${disneyworld.ruta.imagenes}")
+    private String ruta;
 
+    @Autowired
+    private IPersonajeService servicePersonaje;
+
+    @GetMapping("/")
+    public String homePersonaje(Model model){
+
+        List<Personaje> personajes = servicePersonaje.traerPersonajes();
+        model.addAttribute("personajes", personajes);
         return "personaje/indexPersonaje";
     }
 
@@ -28,7 +41,10 @@ public class PersonajeController {
     }
 
     @PostMapping("/crear")
-    public String guardarPersonaje(Personaje personaje, BindingResult result, RedirectAttributes attributes){
+    public String guardarPersonaje(Personaje personaje,
+                                   @RequestParam("foto") MultipartFile multipartFile,
+                                   BindingResult result,
+                                   RedirectAttributes attributes){
 
         if(result.hasErrors()) {
             for (ObjectError error: result.getAllErrors()){
@@ -37,29 +53,39 @@ public class PersonajeController {
             return "personaje/formPersonaje";
         }
 
+        if (!multipartFile.isEmpty()) {
+            String nombreImagen = Utileria.guardarArchivo(multipartFile, ruta);
+            if (nombreImagen != null){ // La imagen si se subio
+                personaje.setImagen(nombreImagen);
+            }
+        }
 
         System.out.println(personaje);
-        attributes.addFlashAttribute("msg", "Personaje creado correctamente");
+        servicePersonaje.guardar(personaje);
+        attributes.addFlashAttribute("msg", "Personaje guardado correctamente");
         return "redirect:/personaje/";
     }
 
-    @GetMapping("/editar")
-    public String editarPersonaje(){
-
-        return "redirect:/personaje/";
+    @GetMapping("/editar/{id}")
+    public String editarPersonaje(@PathVariable("id") Long id, Model model){
+        Personaje p = servicePersonaje.buscarPorId(id);
+        model.addAttribute("personaje", p);
+        return "personaje/formPersonaje";
     }
 
     // que sea un path variable ocn el id del personake a borra
-    @GetMapping("/eliminar")
-    public String eliminarPersonaje(){
+    @GetMapping("/eliminar/{id}")
+    public String eliminarPersonaje(@PathVariable("id") Long id, RedirectAttributes attributes){
 
+        servicePersonaje.borrar(id);
+        attributes.addFlashAttribute("msg", "Personaje eliminado con exito");
         return "redirect:/personaje/";
     }
 
     // que sea un path variable ocn el id del personake a ver el detalle
-    @GetMapping("/detalle")
-    public String detallePersonaje(){
-
-        return "redirect:/personaje/";
+    @GetMapping("/detalle/{id}")
+    public String detallePersonaje(@PathVariable("id") Long id, Model model){
+        model.addAttribute("personaje", servicePersonaje.buscarPorId(id));
+        return "personaje/detalle";
     }
 }

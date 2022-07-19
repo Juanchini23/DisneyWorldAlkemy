@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Disney World</title>
+    <!-- Bootstrap core CSS -->
+    <link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link th:href="@{/bootstrap/css/jumbotron.css}" rel="stylesheet">
+    <link th:href="@{/bootstrap/css/sticky-footer-navbar.css}" rel="stylesheet">
+</head>
+
+<body>
+
+<header th:insert="fragments/navbar :: navbar"></header>
+<main>
+
+    <div class="d-flex flex-column">
+        <div class="container d-flex justify-content-center align-items-center my-5">
+            <div class="mx-5">
+                <h2 th:text="${personaje.nombre}"></h2>
+                <p>Edad: [[${personaje.edad}]]</p>
+                <p>Historia: [[${personaje.historia}]]</p>
+                <p>Peso: [[${personaje.peso}]] kilogramos</p>
+            </div>
+            <div>
+                <img class="card-img-top" th:src="@{/images/{img} (img=${personaje.imagen})}" alt="error-image">
+            </div>
+        </div>
+        <div class="container mt-2">
+            <p>aca van los filmes relacionados</p>
+        </div>
+    </div>
+</main>
+<footer th:insert="fragments/footer :: footer" class="footer"></footer>
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+</body>
+</html>

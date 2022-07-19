@@ -19,12 +19,14 @@
 <header th:insert="fragments/navbar :: navbar"></header>
 <main>
 
-    <h1 class="text-center mt-3">Crea un nuevo personaje</h1>
+    <h1 class="text-center mt-3">Crea un nuevo film</h1>
 
     <div class="container w-50 mx-auto text-center mt-3">
         <form method="post" th:action="@{/personaje/crear}" th:object="${personaje}" enctype="multipart/form-data">
             <div class="form-group my-5">
                 <label for="nombre">Nombre</label>
+                <input type="hidden" th:field="*{id}">
+                <input type="hidden" th:field="*{imagen}">
                 <input type="text" class="form-control" th:field="*{nombre}" id="nombre" name="nombre"  placeholder="Ingresa el nombre">
             </div>
             <div class="form-group my-5">
@@ -41,7 +43,7 @@
             </div>
             <div class="form-group my-5">
                 <label for="imagen">Imagen</label>
-                <input type="file" class="form-control-file" id="imagen">
+                <input type="file" class="form-control-file" id="imagen" name="foto">
             </div>
 
             <button type="submit" class="btn btn-primary my-5">Submit</button>
