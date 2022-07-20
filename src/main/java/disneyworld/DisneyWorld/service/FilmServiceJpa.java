@@ -3,6 +3,7 @@ package disneyworld.DisneyWorld.service;
 import disneyworld.DisneyWorld.model.Film;
 import disneyworld.DisneyWorld.model.Personaje;
 import disneyworld.DisneyWorld.repository.FilmRepository;
+import disneyworld.DisneyWorld.repository.PersonajeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,9 @@ public class FilmServiceJpa implements IFilmService{
 
     @Autowired
     private FilmRepository repoFilm;
+
+    @Autowired
+    private PersonajeRepository repoPersonaje;
 
     @Override
     public void guardar(Film film) {
@@ -54,5 +58,35 @@ public class FilmServiceJpa implements IFilmService{
     @Override
     public void borrar(Long id) {
         repoFilm.deleteById(id);
+    }
+
+    @Override
+    public List<Personaje> traerFaltantes(Long idFilm) {
+
+        List<Personaje> personajesPosesion = repoFilm.findById(idFilm).get().getPersonajes();
+        List<Personaje> personajes = repoPersonaje.findAll();
+
+        personajes.removeAll(personajesPosesion);
+
+        return personajes;
+    }
+
+    @Override
+    public void agregarPersonaje(Long idFilm, Long idPersonaje) {
+        Film film = repoFilm.findById(idFilm).get();
+        Personaje pj = repoPersonaje.findById(idPersonaje).get();
+
+        film.getPersonajes().add(pj);
+
+        repoFilm.save(film);
+    }
+
+    @Override
+    public void eliminarPersonaje(Long idFilm, Long idPersonaje) {
+        Film film = repoFilm.findById(idFilm).get();
+        Personaje pj = repoPersonaje.findById(idPersonaje).get();
+
+        film.getPersonajes().remove(pj);
+        repoFilm.save(film);
     }
 }

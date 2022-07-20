@@ -30,6 +30,7 @@
                     <p>Fecha de creacion: [[${film.fechaCreacion}]]</p>
                 </div>
             </div>
+            <a th:href="@{/film/{idFilm} (idFilm = ${film.id})}" class="mt-3"><button class="btn btn-primary mb-3">Modificar pjs</button></a>
             <h4 class="mt-5">Personajes</h4>
             <div class="container d-flex flex-wrap mt-2">
                 <div class="card mx-2" style="width: 18rem;" th:each="personaje : ${film.personajes}">
