@@ -32,7 +32,14 @@
             </div>
         </div>
         <div class="container mt-2">
-            <p>aca van los filmes relacionados</p>
+            <div class="container d-flex flex-column justify-content-center align-items-center my-5">
+                <div class="card mx-2" th:each="film : ${films}" style="width: 18rem;">
+                    <img class="card-img-top" th:src="@{/images/{img} (img=${film.imagen})}" alt="img">
+                    <div class="card-body">
+                        <h2 th:text="${film.titulo}"></h2>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </main>

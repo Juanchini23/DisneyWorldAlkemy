@@ -21,6 +21,45 @@
 
     <h1 class="text-center mt-3">Crea un nuevo film</h1>
 
+    <div class="container w-50 mx-auto text-center mt-3">
+        <form method="post" th:action="@{/film/crear}" th:object="${film}" enctype="multipart/form-data">
+            <div class="form-group my-5">
+                <label for="titulo">Titulo</label>
+                <input type="hidden" th:field="*{id}">
+                <input type="hidden" th:field="*{imagen}">
+                <input type="hidden" th:field="*{personajes}">
+                <input type="text" class="form-control" th:field="*{titulo}" id="titulo" name="titulo"  placeholder="Ingresa el titulo">
+            </div>
+            <div class="form-group my-5">
+                <label for="calificacion">Calificacion</label>
+                <input type="number" class="form-control" th:field="*{calificacion}" id="calificacion" name="calificacion">
+            </div>
+            <div class="form-group my-5">
+                <label for="fechaCreacion">Fecha de creacion</label>
+                <input type="date" class="form-control" th:field="*{fechaCreacion}" id="fechaCreacion" name="fechaCreacion" placeholder="Ingrese la calificacion">
+            </div>
+            <div class="form-group my-5">
+                <label>Genero</label>
+                <select class="form-control" th:field="*{genero}" name="categoria">
+                    <option th:each="genero : ${generos}"  th:value="${genero.id}">[[${genero.nombre}]]</option>
+                </select>
+            </div>
+            <div class="form-group my-5">
+                <label for="imagen">Imagen</label>
+                <input type="file" class="form-control-file" id="imagen" name="foto">
+            </div>
+            <div th:if="${noEditable == null}" class="form-group my-5">
+                <label>Personajes que participan</label>
+                <div th:each="personaje : ${personajes}">
+                    <label th:text="${personaje.nombre}"></label>
+                    <input type="checkbox" th:value="${personaje.id}" th:field="*{personajes}" name="personajes">
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary my-5">Submit</button>
+        </form>
+    </div>
+
 </main>
 <footer th:insert="fragments/footer :: footer" class="footer"></footer>
 <!-- Bootstrap core JavaScript

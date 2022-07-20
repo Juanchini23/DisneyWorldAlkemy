@@ -19,6 +19,29 @@
 <header th:insert="fragments/navbar :: navbar"></header>
 <main>
 
+    <div class="d-flex flex-column">
+        <div class="container d-flex flex-column justify-content-center align-items-center my-5">
+            <div class="card mx-2" style="width: 18rem;">
+                <img class="card-img-top" th:src="@{/images/{img} (img=${film.imagen})}" alt="img">
+                <div class="card-body">
+                    <h2 th:text="${film.titulo}"></h2>
+                    <p>Genero: [[${film.genero.nombre}]]</p>
+                    <p>Calificacion: [[${film.calificacion}]] estrellas</p>
+                    <p>Fecha de creacion: [[${film.fechaCreacion}]]</p>
+                </div>
+            </div>
+            <h4 class="mt-5">Personajes</h4>
+            <div class="container d-flex flex-wrap mt-2">
+                <div class="card mx-2" style="width: 18rem;" th:each="personaje : ${film.personajes}">
+                    <img class="card-img-top" th:src="@{/images/{img} (img=${personaje.imagen})}" alt="img">
+                    <div class="card-body">
+                        <h5 class="card-title">[[${personaje.nombre}]]</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </main>
 <footer th:insert="fragments/footer :: footer" class="footer"></footer>
 <!-- Bootstrap core JavaScript

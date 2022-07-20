@@ -1,6 +1,7 @@
 package disneyworld.DisneyWorld.controller;
 
 import disneyworld.DisneyWorld.model.Personaje;
+import disneyworld.DisneyWorld.service.IFilmService;
 import disneyworld.DisneyWorld.service.IPersonajeService;
 import disneyworld.DisneyWorld.util.Utileria;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,9 @@ public class PersonajeController {
 
     @Autowired
     private IPersonajeService servicePersonaje;
+
+    @Autowired
+    private IFilmService serviceFilm;
 
     @GetMapping("/")
     public String homePersonaje(Model model){
@@ -86,6 +90,7 @@ public class PersonajeController {
     @GetMapping("/detalle/{id}")
     public String detallePersonaje(@PathVariable("id") Long id, Model model){
         model.addAttribute("personaje", servicePersonaje.buscarPorId(id));
+        model.addAttribute("films", serviceFilm.buscarFilmPersonaje(id));
         return "personaje/detalle";
     }
 }

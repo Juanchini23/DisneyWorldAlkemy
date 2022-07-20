@@ -8,4 +8,7 @@ public interface IFilmService {
 
     void guardar(Film film);
     List<Film> traerFilms();
+    Film traerFilmId(Long id);
+    List<Film> buscarFilmPersonaje(Long idPersonaje);
+    void borrar(Long id);
 }
