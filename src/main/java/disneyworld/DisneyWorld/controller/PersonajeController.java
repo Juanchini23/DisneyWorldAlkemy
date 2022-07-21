@@ -7,6 +7,8 @@ import disneyworld.DisneyWorld.util.Utileria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -31,9 +34,25 @@ public class PersonajeController {
     private IFilmService serviceFilm;
 
     @GetMapping("/")
-    public String homePersonaje(Model model){
+    public String homePersonaje(Personaje personaje, Model model){
 
         List<Personaje> personajes = servicePersonaje.traerPersonajes();
+        model.addAttribute("films", serviceFilm.traerFilms());
+        model.addAttribute("personajes", personajes);
+        return "personaje/indexPersonaje";
+    }
+
+    @GetMapping("/buscar")
+    public String buscar(@ModelAttribute("personaje") Personaje personaje,
+                         @RequestParam(value = "film", required = false) Long idFilm,
+                         Model model){
+        if (idFilm==null){
+            idFilm=0l;
+        }
+        ExampleMatcher matcher = ExampleMatcher.matching().withMatcher("nombre", ExampleMatcher.GenericPropertyMatchers.contains());
+        Example<Personaje> example = Example.of(personaje, matcher);
+        List<Personaje> personajes = servicePersonaje.buscarExample(example, idFilm);
+        model.addAttribute("films", serviceFilm.traerFilms());
         model.addAttribute("personajes", personajes);
         return "personaje/indexPersonaje";
     }

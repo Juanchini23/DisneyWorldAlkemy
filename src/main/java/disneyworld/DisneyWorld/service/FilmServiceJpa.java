@@ -6,6 +6,7 @@ import disneyworld.DisneyWorld.repository.FilmRepository;
 import disneyworld.DisneyWorld.repository.PersonajeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
+import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -30,6 +31,11 @@ public class FilmServiceJpa implements IFilmService{
     @Override
     public List<Film> traerFilms() {
         return repoFilm.findAll();
+    }
+
+    @Override
+    public List<Film> traerFilms(String titulo) {
+        return repoFilm.findAllByTitulo(titulo);
     }
 
     @Override
@@ -88,5 +94,10 @@ public class FilmServiceJpa implements IFilmService{
 
         film.getPersonajes().remove(pj);
         repoFilm.save(film);
+    }
+
+    @Override
+    public List<Film> buscarExample(Example<Film> e) {
+        return repoFilm.findAll(e);
     }
 }

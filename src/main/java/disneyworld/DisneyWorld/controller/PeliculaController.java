@@ -9,6 +9,8 @@ import disneyworld.DisneyWorld.util.Utileria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -39,8 +42,23 @@ public class PeliculaController {
     private IPersonajeService servicePersonaje;
 
     @GetMapping("/")
-    public String homePelicula(Model model){
-        model.addAttribute("films", serviceFilm.traerFilms());
+    public String homePelicula(Film film, Model model){
+
+        List<Film> pelis = serviceFilm.traerFilms();
+
+        model.addAttribute("generos", serviceGenero.traerGeneros());
+        model.addAttribute("films", pelis);
+        return "film/indexFilm";
+    }
+
+    @GetMapping("/buscar")
+    public String buscar(@ModelAttribute("film") Film film, Model model){
+
+        ExampleMatcher matcher = ExampleMatcher.matching().withMatcher("titulo", ExampleMatcher.GenericPropertyMatchers.contains());
+        Example<Film> example = Example.of(film, matcher);
+        List<Film> films = serviceFilm.buscarExample(example);
+        model.addAttribute("generos", serviceGenero.traerGeneros());
+        model.addAttribute("films", films);
         return "film/indexFilm";
     }
 
