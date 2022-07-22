@@ -26,23 +26,34 @@
     <div class="d-flex justify-content-center align-items-center">
         <h4>Buscar:</h4>
         <form class="form-inline ml-3 mt-3" th:action="@{/film/buscar}" th:object="${film}" method="get">
-            <input type="text" name="titulo" class="form-control mb-3" placeholder="Escriba un titulo">
+            <input type="text" name="titulo" th:field="*{titulo}" class="form-control mb-3" placeholder="Escriba un titulo">
             <select class="form-control" th:field="*{genero}" name="categoria">
                 <option th:value="${null}" selected>Seleccione un genero</option>
                 <option th:each="genero : ${generos}"  th:value="${genero.id}">[[${genero.nombre}]]</option>
             </select>
+            <div class="d-flex flex-column mx-2">
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="orden" value="1">
+                    <label class="form-check-label">Asc</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="orden" value="0">
+                    <label class="form-check-label">Desc</label>
+                </div>
+            </div>
             <button type="submit" class="btn btn-primary mb-3">Buscar</button>
         </form>
         <a th:href="@{/film/crear}"><button class="btn btn-success ml-3">Crear</button></a>
     </div>
 
-    <div class="container d-flex flex-wrap">
+    <div class="container d-flex flex-wrap mt-5">
         <div class="card mx-2" style="width: 18rem;" th:each="film : ${films}">
             <img class="card-img-top" th:src="@{/images/{img} (img=${film.imagen})}" alt="img">
             <div class="card-body">
-                <h5 class="card-title">[[${film.titulo}]]</h5>
-                <h3>Personajes:</h3>
-                <h5 th:each="personaje : ${film.personajes}" th:text="${personaje.nombre}"></h5>
+                <h3 class="card-title">[[${film.titulo}]]</h3>
+                <h5 th:text="${film.fechaCreacion}"></h5>
+                <h4>Personajes:</h4>
+                <h6 th:each="personaje : ${film.personajes}" th:text="${personaje.nombre}"></h6>
                 <a th:href="@{/film/editar/{id} (id=${film.id})}" class="btn btn-primary">Editar</a>
                 <a th:href="@{/film/eliminar/{id} (id=${film.id})}" class="btn btn-danger">Eliminar</a>
                 <a th:href="@{/film/detalle/{id} (id=${film.id}) }" class="btn btn-warning">Detalle</a>

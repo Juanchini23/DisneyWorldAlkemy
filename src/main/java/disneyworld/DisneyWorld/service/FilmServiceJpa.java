@@ -9,9 +9,9 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Service
 @Primary
@@ -97,7 +97,37 @@ public class FilmServiceJpa implements IFilmService{
     }
 
     @Override
-    public List<Film> buscarExample(Example<Film> e) {
-        return repoFilm.findAll(e);
+    public List<Film> buscarExample(Example<Film> e, Integer orden){
+        List<Film> todas = repoFilm.findAll(e);
+        Film aux = null;
+
+        if(orden == null){
+            return todas;
+        }
+        if(orden == 1){
+            for(int i = 0; i<todas.size()-1; i++){
+                for (int j = 0; j < todas.size()-1; j++){
+                    if(todas.get(j).getFechaCreacion().compareTo(todas.get(j+1).getFechaCreacion()) > 0){
+                        aux = todas.get(j);
+                        todas.set(j, todas.get(j+1));
+                        todas.set(j+1, aux);
+                    }
+                }
+            }
+        }
+
+        if(orden == 0){
+            for(int i = 0; i<todas.size()-1; i++){
+                for (int j = 0; j < todas.size()-1; j++){
+                    if(todas.get(j).getFechaCreacion().compareTo(todas.get(j+1).getFechaCreacion()) < 0){
+                        aux = todas.get(j);
+                        todas.set(j, todas.get(j+1));
+                        todas.set(j+1, aux);
+                    }
+                }
+            }
+        }
+
+        return todas;
     }
 }

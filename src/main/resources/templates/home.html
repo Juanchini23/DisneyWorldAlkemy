@@ -18,8 +18,10 @@
 
 <header th:insert="fragments/navbar :: navbar"></header>
 
-
     <h1 class="text-center mt-3">Bienvenidos</h1>
+    <div th:if="${msg}" class="container bg-success">
+        <h5 th:text="${msg}" class="text-center p-2"></h5>
+    </div>
 
 
 <header th:insert="fragments/footer :: footer" class="footer"></header>

@@ -56,6 +56,7 @@ public class PersonajeServiceJpa implements IPersonajeService{
         List<Personaje> personajes = repoPersonaje.findAll(e);
         Optional<Film> op = repoFilm.findById(idFilm);
         Film film = null;
+
         if(op.isPresent()) {
             film = op.get();
         }
@@ -63,14 +64,6 @@ public class PersonajeServiceJpa implements IPersonajeService{
             return personajes;
         }
 
-        /*for (Film film : pelis){
-            for(Personaje p : personajes){
-                if(p.getId() == idPersonaje){
-                    filmsReturn.add(film);
-                    break;
-                }
-            }
-        }*/
         List<Personaje> personajesReturn = new ArrayList<>();
         for(Personaje personaje : personajes){
             for(Personaje p2 : film.getPersonajes()){

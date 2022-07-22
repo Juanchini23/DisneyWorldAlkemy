@@ -51,12 +51,15 @@ public class PeliculaController {
         return "film/indexFilm";
     }
 
+    // pasar los metodos para el de arriba asi queda bien el endpoint
     @GetMapping("/buscar")
-    public String buscar(@ModelAttribute("film") Film film, Model model){
+    public String buscar(@ModelAttribute("film") Film film,
+                         @RequestParam(value = "orden", required = false) Integer orden,
+                         Model model){
 
         ExampleMatcher matcher = ExampleMatcher.matching().withMatcher("titulo", ExampleMatcher.GenericPropertyMatchers.contains());
         Example<Film> example = Example.of(film, matcher);
-        List<Film> films = serviceFilm.buscarExample(example);
+        List<Film> films = serviceFilm.buscarExample(example, orden);
         model.addAttribute("generos", serviceGenero.traerGeneros());
         model.addAttribute("films", films);
         return "film/indexFilm";
