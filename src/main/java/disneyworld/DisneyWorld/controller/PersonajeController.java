@@ -94,7 +94,6 @@ public class PersonajeController {
         return "personaje/formPersonaje";
     }
 
-    // que sea un path variable ocn el id del personake a borra
     @GetMapping("/eliminar/{id}")
     public String eliminarPersonaje(@PathVariable("id") Long id, RedirectAttributes attributes){
         //ConstraintViolationException excepcion que tira cuando elimino un personaje que esta en una peli
@@ -103,7 +102,6 @@ public class PersonajeController {
         return "redirect:/personaje/";
     }
 
-    // que sea un path variable ocn el id del personake a ver el detalle
     @GetMapping("/detalle/{id}")
     public String detallePersonaje(@PathVariable("id") Long id, Model model){
         model.addAttribute("personaje", servicePersonaje.buscarPorId(id));

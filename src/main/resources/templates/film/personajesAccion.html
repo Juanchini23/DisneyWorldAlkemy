@@ -26,9 +26,13 @@
                 <h2 th:text="${film.titulo}"></h2>
             </div>
         </div>
+        <h3>Personajes a agregar</h3>
         <div th:each="pj : ${personajesAgregar}" class="d-flex justify-content-center align-items-center ml-5">
             <h5 th:text="${pj.nombre}"></h5>
-            <a th:href="@{/film/{idFilm}/personaje/{idPersonaje} (idFilm = ${film.id}, idPersonaje = ${pj.id})}" class="mt-3"><button class="btn btn-primary mb-3 mr-3">Agregar pj</button></a>
+            <form method="post" th:action="@{/film/{idFilm}/personaje/{idPersonaje} (idFilm = ${film.id}, idPersonaje = ${pj.id})}">
+                <button type="submit" class="btn btn-primary mb-3 mr-3">Agregar pj</button>
+            </form>
+            <!--<a th:href="@{/film/{idFilm}/personaje/{idPersonaje} (idFilm = ${film.id}, idPersonaje = ${pj.id})}" class="mt-3"><button class="btn btn-primary mb-3 mr-3">Agregar pj</button></a>-->
         </div>
     </div>
 

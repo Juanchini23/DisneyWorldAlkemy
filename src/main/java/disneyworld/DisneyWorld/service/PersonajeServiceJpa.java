@@ -32,7 +32,20 @@ public class PersonajeServiceJpa implements IPersonajeService{
 
     @Override
     public void borrar(Long idPersonaje) {
+        borrarEnFilms(idPersonaje);
         repoPersonaje.deleteById(idPersonaje);
+    }
+
+    private void borrarEnFilms(Long idPersonaje) {
+        List<Film> films = repoFilm.findAll();
+        Personaje personajeBorrar = repoPersonaje.findById(idPersonaje).get();
+        for(Film film : films){
+            if (film.getPersonajes().contains(personajeBorrar)) {
+                film.getPersonajes().remove(personajeBorrar);
+            }
+            repoFilm.save(film);
+        }
+
     }
 
     @Override

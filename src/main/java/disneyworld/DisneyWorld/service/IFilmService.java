@@ -21,4 +21,6 @@ public interface IFilmService {
     void eliminarPersonaje(Long idFilm, Long idPersonaje);
 
     List<Film> buscarExample(Example<Film> e, Integer orden);
+
+    List<Personaje> traerPersonajesXFilm(Long idFilm);
 }

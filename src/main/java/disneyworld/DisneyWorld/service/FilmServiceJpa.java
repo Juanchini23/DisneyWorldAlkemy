@@ -78,6 +78,11 @@ public class FilmServiceJpa implements IFilmService{
     }
 
     @Override
+    public List<Personaje> traerPersonajesXFilm(Long idFilm) {
+        return repoFilm.findById(idFilm).get().getPersonajes();
+    }
+
+    @Override
     public void agregarPersonaje(Long idFilm, Long idPersonaje) {
         Film film = repoFilm.findById(idFilm).get();
         Personaje pj = repoPersonaje.findById(idPersonaje).get();
@@ -130,4 +135,6 @@ public class FilmServiceJpa implements IFilmService{
 
         return todas;
     }
+
+
 }

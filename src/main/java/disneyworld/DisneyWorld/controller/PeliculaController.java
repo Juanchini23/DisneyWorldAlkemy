@@ -125,21 +125,20 @@ public class PeliculaController {
         model.addAttribute("film", serviceFilm.traerFilmId(idFilm));
         //trae los personajes que le faltan a la pelicula
         model.addAttribute("personajesAgregar", serviceFilm.traerFaltantes(idFilm));
-
+        model.addAttribute("personajesEliminar", serviceFilm.traerPersonajesXFilm(idFilm));
         return "film/personajesAccion";
     }
 
     //endpoint parar agregar personaje a una pelicula
     // hacer post ?
-    @GetMapping("/{idFilm}/personaje/{idPersonaje}")
+    @PostMapping("/{idFilm}/personaje/{idPersonaje}")
     public String agregarPersonaje(@PathVariable("idFilm") Long idFilm,
                                    @PathVariable("idPersonaje") Long idPersonaje){
         serviceFilm.agregarPersonaje(idFilm, idPersonaje);
         return "redirect:/film/";
     }
 
-    //hacer delete ?
-    /*@GetMapping("/{idFilm}/personaje/{idPersonaje}")
+    /*@DeleteMapping("/{idFilm}/personaje/{idPersonaje}")
     public String eliminarPersonaje(@PathVariable("idFilm") Long idFilm,
                                    @PathVariable("idPersonaje") Long idPersonaje){
         serviceFilm.eliminarPersonaje(idFilm, idPersonaje);
