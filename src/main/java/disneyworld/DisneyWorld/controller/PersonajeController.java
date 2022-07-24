@@ -97,7 +97,7 @@ public class PersonajeController {
     // que sea un path variable ocn el id del personake a borra
     @GetMapping("/eliminar/{id}")
     public String eliminarPersonaje(@PathVariable("id") Long id, RedirectAttributes attributes){
-
+        //ConstraintViolationException excepcion que tira cuando elimino un personaje que esta en una peli
         servicePersonaje.borrar(id);
         attributes.addFlashAttribute("msg", "Personaje eliminado con exito");
         return "redirect:/personaje/";
